@@ -1,0 +1,20 @@
+{
+  "category": [
+    {
+      "id": "aa9f03ac-c849-47a9-8688-6462ea78dd6f",
+      "NAME": "کالا",
+      "PARENTID": 0
+    },
+    {
+      "id": "142988b4-f703-45bd-a805-384059ba7d2b",
+      "NAME": "غیر انتفاعی",
+      "PARENTID": "a3c33a0e-236b-4c7c-afb4-55a810330360"
+    },
+    {
+      "id": "063ad8eb-d38f-4b5e-a608-fb6f6f3bd745",
+      "NAME": "خودرو",
+      "PARENTID": "aa9f03ac-c849-47a9-8688-6462ea78dd6f"
+    }
+  ],
+  "tree": []
+}

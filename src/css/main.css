@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+
+@layer components {
+  .title-color {
+    @apply text-gray-700 dark:text-gray-400;
+  }
+
+  .border-style {
+    @apply border-gray-300;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .custom-transition {
+    @apply transition-all duration-300 ease-in;
+  }
+
+  .scroll-fixed{
+    @apply h-full overflow-hidden
+  }
+}
+
+@tailwind utilities;

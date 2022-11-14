@@ -1,0 +1,8 @@
+section{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+section > * {
+    margin: 1em 0;
+  }
