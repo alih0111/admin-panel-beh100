@@ -11,14 +11,14 @@ export default function AddExist({ history, match }) {
   const [newExist, setNewExist] = useState();
   let [mainData, setMainData] = useState();
   let [fileObj, setFileObj] = useState({ id: 0, NAME: "0", PARENTID: 0 });
-  let [id_url,setId_url]=useState()
+  let [id_url, setId_url] = useState();
 
   useEffect(() => {
     const localFetch = async () => {
       try {
         // const { data } = await getOneExist(match.params.id);
         // console.log(match.params.id);
-        setId_url(match.params.id)
+        setId_url(match.params.id);
       } catch (error) {}
     };
     localFetch();
@@ -44,17 +44,15 @@ export default function AddExist({ history, match }) {
       alert("تکمیل فیلد اجباری است");
       return;
     }
-
-    // choosed nothing
-    // if (selectVal == undefined) {
-
-    fileObj = { id: uuid(), NAME: newExist, PARENTID: 0 };
-    fileObj.PARENTID = id_url;
+    
+    // let chackbox=document.getElementById('add_parent_checkbox')
+    // if(chackbox.checked){
+    //   fileObj = { id: uuid(), NAME: newExist, PARENTID: 0 };
+    //   fileObj.PARENTID = id_url;
     // }
-    // choosed something
-    // else {
-    //   fileObj.id = uuid();
-    //   fileObj.NAME = inputCategories;
+    // else{
+      fileObj = { id: uuid(), NAME: newExist, PARENTID: 0 };
+      fileObj.PARENTID = id_url;
     // }
 
     try {
@@ -79,7 +77,7 @@ export default function AddExist({ history, match }) {
             نام دسته بندی{" "}
           </label>{" "}
           <div id="container" className="flex gap-4 ">
-            <input            
+            <input
               value={newExist}
               type="text"
               name="name"
@@ -89,14 +87,15 @@ export default function AddExist({ history, match }) {
               onChange={changeHandler}
             />{" "}
           </div>{" "}
-        <div className="flex mb-4 gap-2">
-        <input id="add_parent" type="checkbox"/>
-        <label htmlFor="add_parent" className="text-gray-600">پدر اضافه شود</label>
-        </div>
+          <div className="flex mb-4 gap-2">
+            <input id="add_parent_checkbox" type="checkbox"  />
+            <label htmlFor="add_parent_checkbox" className="text-gray-600">
+              پدر اضافه شود
+            </label>
+          </div>
         </div>{" "}
         {/* buttons */}
         <div className="flex gap-2">
-          
           <button
             type="submit"
             className="bg-indigo-500 text-white px-8 py-1 rounded-lg border border-indigo-400 hover:bg-indigo-600 transition-all"
