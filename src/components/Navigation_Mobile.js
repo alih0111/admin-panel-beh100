@@ -46,7 +46,6 @@ const Navigation_Mobile = () => {
           );
         })}
       </ul>
-      {console.log(i)}
     </nav>
   );
 };

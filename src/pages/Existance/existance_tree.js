@@ -11,7 +11,7 @@ export default function Existance_tree() {
   let [mainCategories1, setMainCategories1] = useState([]);
   let [tree, setTree] = useState({});
   const [selectedID, setSelectedID] = useState(0);
-  
+
   // get categories
   useEffect(() => {
     const fetchContacts = async () => {
@@ -50,8 +50,26 @@ export default function Existance_tree() {
     setTree(tree5);
   };
 
-  const selectedIDHandler=(value)=>{
-    setSelectedID(value)
+  const selectedIDHandler = (value) => {
+    setSelectedID(value);
+  };
+
+  // let tree_AllShow_clicked = false;
+  const [tree_AllShow_clicked, setTree_AllShow_clicked] = useState(false);
+  const [treeShow, setTreeShow] = useState(0);
+
+  const tree_AllShow = () => {
+    if (tree_AllShow_clicked) {
+      setTree_AllShow_clicked(false)
+      setTreeShow(2);
+    } else {
+      setTree_AllShow_clicked(true)
+      setTreeShow(1);
+    }
+  };
+  const tree_closeAll=()=>{
+    setTree_AllShow_clicked(false)
+    setTreeShow(2);
   }
 
   return (
@@ -66,7 +84,13 @@ export default function Existance_tree() {
       <div className="flex justify-center items-center py-10">
         <h2 className="">درخت دسته بندی ها</h2>
       </div>
-      <Tree2 data={tree} />
+      <button
+        className="heoo my-4 flex mx-auto bg-slate-300 px-4 py-2 rounded-lg"
+        onClick={tree_AllShow}
+      >
+        {treeShow==1?'بستن درخت':'نمایش کامل درخت'}
+      </button>
+      <Tree2 data={tree} treeShow={treeShow} tree_closeAll={tree_closeAll}/>
       {/* {selectedID != 0 ? <Modal_Tree selectedID={selectedID} /> : ""} */}
     </>
   );
