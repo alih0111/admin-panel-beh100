@@ -1,39 +1,19 @@
 {
   "category": [
     {
-      "id": "aa9f03ac-c849-47a9-8688-6462ea78dd6f",
-      "NAME": "کالا",
+      "id": "5aad489d-b600-4a8c-910a-5651908084b2",
+      "NAME": "خودرو",
       "PARENTID": 0
     },
     {
-      "id": "142988b4-f703-45bd-a805-384059ba7d2b",
-      "NAME": "غیر انتفاعی",
-      "PARENTID": "a3c33a0e-236b-4c7c-afb4-55a810330360"
-    },
-    {
-      "id": "063ad8eb-d38f-4b5e-a608-fb6f6f3bd745",
-      "NAME": "خودرو",
-      "PARENTID": "aa9f03ac-c849-47a9-8688-6462ea78dd6f"
-    },
-    {
-      "id": "3d82d8f1-9c25-4c24-ab12-5c25b633ba9e",
+      "id": "661d8246-e2f7-444d-b265-53344d1cae5b",
       "NAME": "خوراکی",
       "PARENTID": 0
     },
     {
-      "id": "c25ae382-5ff4-4cd4-8e6a-5f904011211c",
-      "NAME": "خشکبار",
-      "PARENTID": "3d82d8f1-9c25-4c24-ab12-5c25b633ba9e"
-    },
-    {
-      "id": "95cb004b-b37e-4046-8380-88891f2420e0",
-      "NAME": "شکر",
-      "PARENTID": "3d82d8f1-9c25-4c24-ab12-5c25b633ba9e"
-    },
-    {
-      "id": "e4eaa1d7-f513-45ec-a82d-0680b67c4ed9",
-      "NAME": "آجیل",
-      "PARENTID": "c25ae382-5ff4-4cd4-8e6a-5f904011211c"
+      "id": "40b7c145-2b71-4db1-96c9-71d2002177f4",
+      "NAME": "تنقلات",
+      "PARENTID": "661d8246-e2f7-444d-b265-53344d1cae5b"
     }
   ],
   "tree": []

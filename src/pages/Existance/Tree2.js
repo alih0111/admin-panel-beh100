@@ -3,22 +3,30 @@ import { Link } from "react-router-dom";
 import "./tree.css";
 import { deleteCategory } from "../../services/deleteCategoryService";
 import { getAllCategories } from "../../services/getAllCategoryService";
+import AddExist from "./AddExist";
 
-const Tree2 = ({ data, treeShow,tree_closeAll }) => {
+const Tree2 = ({ data, treeShow, tree_closeAll }) => {
   return (
     <div className="d-tree w-fit ">
       <ul className="flex flex-col d-tree-container gap-1 border-r rounded-lg border-slate-400">
         {data != undefined && data.length >= 1
-          ? data.map((tree) => <TreeNode node={tree} treeShow={treeShow} tree_closeAll={tree_closeAll} />)
+          ? data.map((tree) => (
+              <TreeNode
+                node={tree}
+                treeShow={treeShow}
+                tree_closeAll={tree_closeAll}
+              />
+            ))
           : "loading"}
       </ul>
     </div>
   );
 };
 
-const TreeNode = ({ node, treeShow,tree_closeAll }) => {
+const TreeNode = ({ node, treeShow, tree_closeAll }) => {
   let [mainData, setMainData] = useState();
   let [modalSelect, setModalSelect] = useState(0);
+  let [addModal, setAddModal] = useState(0);
 
   const [childVisible, setChildVisiblity] = useState(false);
   const hasChild = node.children ? true : false;
@@ -39,6 +47,10 @@ const TreeNode = ({ node, treeShow,tree_closeAll }) => {
     // try {
     //   deleteHandlerChild(id);
     // } catch (error) {}
+  };
+
+  const addModalHandler = (e) => {
+    setAddModal(1);
   };
 
   // const deleteHandlerChild = async (last_id) => {
@@ -64,31 +76,20 @@ const TreeNode = ({ node, treeShow,tree_closeAll }) => {
     return i;
   };
 
-  // let tree_show=0
-  // // const node_click = () => {
-  //   // setChildVisiblity((v) => !v);
-  //   document.querySelector(".heoo").onclick = function () {
-  //     // setChildVisiblity(true);
-  //     tree_show=1
-  //   // };
-  // };
-
   return (
     <>
-      {/* {console.log(treeShow)} */}
-      {/* {active==1?<div className={`${active=0}`}>hello </div>:''} */}
       <li className="bg-slate-300 p-2 mr-2 sm:mr-0  justify-center rounded-lg d-tree-node flex flex-col">
         <div
           className=" flex activeParent items-center"
-          onClick={(e) => {setChildVisiblity((v) => !v) 
-            
+          onClick={(e) => {
+            setChildVisiblity((v) => !v);
           }}
         >
           {/* start svg */}
           {hasChild && (
             <div
               className={`tree_node flex items-center d-inline d-tree-toggle ${
-                childVisible ||  treeShow == 1  ? "active" : ""
+                childVisible || treeShow == 1 ? "active" : ""
               }`}
             >
               {/* <FontAwesomeIcon icon='caret-right' /> */}
@@ -129,9 +130,8 @@ const TreeNode = ({ node, treeShow,tree_closeAll }) => {
           <div className="flex flex-col d-tree-head border border-slate-300 hover:border-indigo-400 rounded-lg">
             {/* <i className={`mr-1 ${node.icon}`}></i> */}
             <div className="tree_icons_parents transition-all hover:bg-slate-200 w-60 rounded-lg p-2 flex items-center justify-between cursor-pointer">
-              {/* {console.log(num_child(node.id))} */}
-             {/* header */}
-              <span  onClick={()=>tree_closeAll()} className="pr-2 w-full">
+              {/* header */}
+              <span className="pr-2 w-full">
                 {node.NAME}{" "}
                 <span className="text-gray-500">{`(${num_child(
                   node.id
@@ -139,24 +139,28 @@ const TreeNode = ({ node, treeShow,tree_closeAll }) => {
               </span>
               <div className="tree_icons hidden transition-all">
                 {/* add */}
-                <Link to={`/add/${node.id}`}>
-                  <button className="flex items-center text-sm bg-white border border-green-500 hover:bg-green-600 hover:border-green-600 text-green-600 p-[1px] transition-all hover:text-white mx-1 rounded-lg">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-5 h-5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M12 4.5v15m7.5-7.5h-15"
-                      />
-                    </svg>
-                  </button>
-                </Link>
+                {/* <Link to={`/add/${node.id}`}> */}
+                <button
+                  onClick={(e) => addModalHandler(e)}
+                  className="flex items-center text-sm bg-white border border-green-500 hover:bg-green-600 hover:border-green-600 text-green-600 p-[1px] transition-all hover:text-white mx-1 rounded-lg"
+                >
+                  <AddExist addModal={addModal} node={node} />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                </button>
+                {/* </Link> */}
                 {/* edit */}
                 <Link to={`/edit/${node.id}`}>
                   <button className="flex items-center hover:bg-sky-600 hover:text-white bg-white text-sm border border-sky-600 text-sky-600 mx-1 p-[1px] rounded-lg transition-all">
@@ -197,12 +201,9 @@ const TreeNode = ({ node, treeShow,tree_closeAll }) => {
                     />
                   </svg>
                 </button>
+                {/* جزئیات */}
                 <Link to={`/edit/${node.id}`}>
-                  <button
-                    // onClick={() => <Modal_Tree selectedID={node.id} />}
-                    className="flex items-center bg-white text-sm hover:bg-indigo-600 hover:text-white border border-indigo-600 text-indigo-600 p-[1px] mx-1 rounded-lg transition-all"
-                  >
-                    {/* جزئیات */}
+                  <button className="flex items-center bg-white text-sm hover:bg-indigo-600 hover:text-white border border-indigo-600 text-indigo-600 p-[1px] mx-1 rounded-lg transition-all">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -224,11 +225,15 @@ const TreeNode = ({ node, treeShow,tree_closeAll }) => {
           </div>
         </div>
 
-                  {/* {console.log(treeShow)} */}
-        {hasChild && (childVisible || treeShow == 1 ) && (
+        {/* {console.log(treeShow)} */}
+        {hasChild && (childVisible || treeShow == 1) && (
           <div className="d-tree-content mr-2">
             <ul className="flex flex-col d-tree-container">
-              <Tree2 data={node.children} treeShow={treeShow} tree_closeAll={tree_closeAll}/>
+              <Tree2
+                data={node.children}
+                treeShow={treeShow}
+                tree_closeAll={tree_closeAll}
+              />
             </ul>
           </div>
         )}
@@ -268,27 +273,43 @@ const Modal_Tree = ({ setModalNum, node }) => {
     });
   };
 
+  const childList = (id) => {
+    let cc = [];
+    mainData.map((item) => {
+      if (item.PARENTID == id) cc.push(item.NAME);
+    });
+    if (cc.length > 0)
+      return { __html: `زیر شاخه هایی که حذف خواهند شد:  ${cc}` };
+  };
+
   return (
     <>
       {setModalNum == 1 ? (
         <>
           <div className="inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 backdrop-blur-sm shadow-xl w-screen h-screen z-10 absolute ">
-            <form className="z-20 absolute flex justify-center items-center flex-col bg-slate-100 rounded-lg w-80 p-6 mx-auto">
+            <div className="z-20 absolute flex justify-center items-center flex-col bg-slate-100 rounded-lg w-80 p-6 mx-auto">
               <div className="flex-col">
-                <label
-                  htmlFor="category-title"
-                  className="block mb-1 text-slate-400"
-                >
+                <label className="block mb-1 text-slate-400">
                   نام موجودیت / دسته بندی{" "}
                 </label>{" "}
-                <div id="container" className="flex gap-4 ">
-                  <p className="text-slate-700 border border-slate-500 rounded-lg flex mx-auto py-2 px-6 m-3 mb-5">
+                <div
+                  id="container"
+                  className="flex flex-col items-center justify-center gap-4 "
+                >
+                  <p className="text-slate-700 border border-slate-500 rounded-lg flex mx-auto py-2 px-6 m-3 mb-1">
                     {node.NAME}
                   </p>
+
+                  {/* <p className="childListParents" id="chichi">{childList(node.id)}</p> */}
+                  <div
+                    className="text-gray-600 mb-3"
+                    dangerouslySetInnerHTML={childList(node.id)}
+                  />
+                  {/* <div className="chichi"></div> */}
                 </div>{" "}
               </div>{" "}
               {/* <span className=" p-1 rounded-lg border border-indigo-400"> */}{" "}
-              {/* start delete modal */}
+              {/* buttons */}
               <div className="flex gap-2">
                 <button
                   onClick={() => {
@@ -305,9 +326,8 @@ const Modal_Tree = ({ setModalNum, node }) => {
                   حذف{" "}
                 </button>{" "}
               </div>{" "}
-              {/* end delete modal */}
               {/* </span> */} {/* <button type="submit">حذف</button> */}{" "}
-            </form>
+            </div>
           </div>
         </>
       ) : (
