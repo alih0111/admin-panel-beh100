@@ -5,8 +5,3 @@
     display: flex;
     transition: all;
 }
-.tree_icons_parents:hover .tree_icon_info{
-    /* display: flex; */
-    /* transition: all; */
-    display:none
-}

@@ -1,12 +1,6 @@
-// import { getAllProducts } from "../../services/getAllProductService";
 import { getAllCategories } from "../../services/getAllCategoryService";
-import { addTree } from "../../services/addTreetService";
 import { useState, useEffect } from "react";
-import { v4 as uuid } from "uuid";
 import Tree2 from "./Tree2";
-import Tree from "react-hyper-tree";
-import Modal_Tree from "./Modal_Tree";
-import AddExist from "./AddExist";
 import AddExistNoP from "./AddExistNoP";
 
 export default function Existance_tree() {
@@ -63,7 +57,6 @@ export default function Existance_tree() {
 
   const [addNoP,setAddNoP]=useState(0)
   const AddNoPHandler=()=>{
-    console.log(document.querySelector('.AddNoP'))
     setAddNoP(1)
   }
 
@@ -75,7 +68,7 @@ export default function Existance_tree() {
 
       <div className="flex gap-2 justify-center mx-2">
         <button
-          className="AddNoP my-4 border hover:border-blue-400 hover:bg-slate-200 hover:shadow-lg transition-all bg-slate-300 px-4 py-2 rounded-lg"
+          className="AddNoP my-4 border hover:border-blue-400 hover:bg-slate-200 hover:shadow-lg transition-all bg-white px-4 py-2 rounded-lg"
           onClick={AddNoPHandler}
         >
           <AddExistNoP addNoP={addNoP}/>
@@ -83,7 +76,7 @@ export default function Existance_tree() {
           افزودن موجودیت
         </button>
         <button
-          className="heoo my-4 bg-slate-300 px-4 py-2 rounded-lg border hover:border-blue-400 hover:bg-slate-200 hover:shadow-lg transition-all"
+          className="heoo my-4 bg-white px-4 py-2 rounded-lg border hover:border-blue-400 hover:bg-slate-200 hover:shadow-lg transition-all"
           onClick={tree_AllShow}
         >
           {treeShow == 1 ? "بستن درخت" : "نمایش کامل درخت"}

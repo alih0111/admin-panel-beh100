@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import { addNewCategory } from "../../services/addNewCategoryService";
 import updateExist from "../../services/updateExistService";
 
-export default function AddExist({ addModal, node, history }) {
+export default function AddExist({ addModal, node }) {
   const [newExist, setNewExist] = useState();
   let [fileObj, setFileObj] = useState({ id: 0, NAME: "0", PARENTID: 0 });
   let [id_url, setId_url] = useState(0);

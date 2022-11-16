@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./tree.css";
-import { deleteCategory } from "../../services/deleteCategoryService";
 import { getAllCategories } from "../../services/getAllCategoryService";
 import AddExist from "./AddExist";
+import Modal_Tree from "./delete_modal";
 
 const Tree2 = ({ data, treeShow, tree_closeAll }) => {
   return (
@@ -41,15 +41,11 @@ const TreeNode = ({ node, treeShow, tree_closeAll }) => {
     localFetch();
   }, []);
 
-  const deleteHandler = async (e, id) => {
-    e.preventDefault();
+  const deleteHandler = async () => {
     setModalSelect(1);
-    // try {
-    //   deleteHandlerChild(id);
-    // } catch (error) {}
   };
 
-  const addModalHandler = (e) => {
+  const addModalHandler = () => {
     setAddModal(1);
   };
 
@@ -78,7 +74,7 @@ const TreeNode = ({ node, treeShow, tree_closeAll }) => {
 
   return (
     <>
-      <li className="bg-slate-300 p-2 mr-2 sm:mr-0  justify-center rounded-lg d-tree-node flex flex-col">
+      <li className="bg-white p-2 mr-2 sm:mr-0  justify-center rounded-lg d-tree-node flex flex-col">
         <div
           className=" flex activeParent items-center"
           onClick={(e) => {
@@ -127,9 +123,9 @@ const TreeNode = ({ node, treeShow, tree_closeAll }) => {
           )}
           {/* end svg */}
 
-          <div className="flex flex-col d-tree-head border border-slate-300 hover:border-indigo-400 rounded-lg">
+          <div className="flex flex-col d-tree-head border border-white hover:border-indigo-400 rounded-lg">
             {/* <i className={`mr-1 ${node.icon}`}></i> */}
-            <div className="tree_icons_parents transition-all hover:bg-slate-200 w-60 rounded-lg p-2 flex items-center justify-between cursor-pointer">
+            <div className="tree_icons_parents transition-all hover:bg-slate-200 hover:shadow-lg w-60 rounded-lg p-2 flex items-center justify-between cursor-pointer">
               {/* header */}
               <span className="pr-2 w-full">
                 {node.NAME}{" "}
@@ -137,7 +133,11 @@ const TreeNode = ({ node, treeShow, tree_closeAll }) => {
                   node.id
                 )})`}</span>
               </span>
-              <div className="tree_icons hidden transition-all">
+              <div
+                className={`tree_icons ${
+                  addModal || modalSelect ? "flex" : "hidden"
+                } transition-all`}
+              >
                 {/* add */}
                 {/* <Link to={`/add/${node.id}`}> */}
                 <button
@@ -182,7 +182,7 @@ const TreeNode = ({ node, treeShow, tree_closeAll }) => {
                 </Link>
                 {/* delete */}
                 <button
-                  onClick={(e) => deleteHandler(e, node.id)}
+                  onClick={() => deleteHandler()}
                   className="flex items-center bg-white text-sm border border-red-600 text-red-600 hover:bg-red-600 hover:text-white p-[1px] mx-1 rounded-lg transition-all"
                 >
                   <Modal_Tree setModalNum={modalSelect} node={node} />
@@ -238,101 +238,6 @@ const TreeNode = ({ node, treeShow, tree_closeAll }) => {
           </div>
         )}
       </li>
-    </>
-  );
-};
-
-const Modal_Tree = ({ setModalNum, node }) => {
-  let [mainData, setMainData] = useState();
-
-  useEffect(() => {
-    const localFetch = async () => {
-      try {
-        const { data } = await getAllCategories();
-        setMainData(data);
-      } catch (error) {}
-    };
-    localFetch();
-  }, []);
-
-  const deleteHandler = async (e, id) => {
-    e.preventDefault();
-    try {
-      deleteHandlerChild(id);
-    } catch (error) {}
-  };
-
-  const deleteHandlerChild = async (last_id) => {
-    await deleteCategory(last_id);
-    mainData.map(async (item) => {
-      if (item.PARENTID == last_id) {
-        await deleteHandlerChild(item.id);
-      } else {
-        window.location.reload();
-      }
-    });
-  };
-
-  const childList = (id) => {
-    let cc = [];
-    mainData.map((item) => {
-      if (item.PARENTID == id) cc.push(item.NAME);
-    });
-    if (cc.length > 0)
-      return { __html: `زیر شاخه هایی که حذف خواهند شد:  ${cc}` };
-  };
-
-  return (
-    <>
-      {setModalNum == 1 ? (
-        <>
-          <div className="inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 backdrop-blur-sm shadow-xl w-screen h-screen z-10 absolute ">
-            <div className="z-20 absolute flex justify-center items-center flex-col bg-slate-100 rounded-lg w-80 p-6 mx-auto">
-              <div className="flex-col">
-                <label className="block mb-1 text-slate-400">
-                  نام موجودیت / دسته بندی{" "}
-                </label>{" "}
-                <div
-                  id="container"
-                  className="flex flex-col items-center justify-center gap-4 "
-                >
-                  <p className="text-slate-700 border border-slate-500 rounded-lg flex mx-auto py-2 px-6 m-3 mb-1">
-                    {node.NAME}
-                  </p>
-
-                  {/* <p className="childListParents" id="chichi">{childList(node.id)}</p> */}
-                  <div
-                    className="text-gray-600 mb-3"
-                    dangerouslySetInnerHTML={childList(node.id)}
-                  />
-                  {/* <div className="chichi"></div> */}
-                </div>{" "}
-              </div>{" "}
-              {/* <span className=" p-1 rounded-lg border border-indigo-400"> */}{" "}
-              {/* buttons */}
-              <div className="flex gap-2">
-                <button
-                  onClick={() => {
-                    window.location.reload();
-                  }}
-                  className="bg-transparent text-slate-500 px-4 py-1 rounded-lg border border-slate-500"
-                >
-                  انصراف{" "}
-                </button>{" "}
-                <button
-                  onClick={(e) => deleteHandler(e, node.id)}
-                  className="bg-transparent text-red-500 px-4 py-1 rounded-lg border border-red-500 hover:bg-red-500 hover:text-white transition-all"
-                >
-                  حذف{" "}
-                </button>{" "}
-              </div>{" "}
-              {/* </span> */} {/* <button type="submit">حذف</button> */}{" "}
-            </div>
-          </div>
-        </>
-      ) : (
-        ""
-      )}
     </>
   );
 };

@@ -5,7 +5,6 @@ import { addNewCategory } from "../../services/addNewCategoryService";
 export default function AddExistNoP({ addNoP }) {
   const [newExist, setNewExist] = useState();
   let [fileObj, setFileObj] = useState({ id: 0, NAME: "0", PARENTID: 0 });
-//   let [id_url, setId_url] = useState();
 
   const changeHandler = (e) => {
     setNewExist(e.target.value);
